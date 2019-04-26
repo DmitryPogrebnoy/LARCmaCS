@@ -8,7 +8,8 @@ RefereeClient::RefereeClient()
 	connect(&mThread, SIGNAL(started()), mWorker, SLOT(start()));
 	connect(&mThread, SIGNAL(finished()), mWorker, SLOT(deleteLater()));
 
-	connect(mWorker, SIGNAL(refereeInfoUpdate(QSharedPointer<RefereeInfo>)), this, SIGNAL(refereeInfoUpdate(QSharedPointer<RefereeInfo>)));
+	connect(mWorker, SIGNAL(refereeInfoUpdate(QSharedPointer<RefereeInfo>)),
+			this, SIGNAL(refereeInfoUpdate(QSharedPointer<RefereeInfo>)));
 
 	mThread.start();
 }
