@@ -7,19 +7,19 @@
 
 struct RefereeClient : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit RefereeClient();
-    ~RefereeClient();
-    void start();
-    void stop();
+	explicit RefereeClient();
+	~RefereeClient();
+	void start();
+	void stop();
 
 signals:
-    void refereeInfoUpdate(QSharedPointer<RefereeInfo> refInfo);
-    void wstop();
+	void refereeInfoUpdate(QSharedPointer<RefereeInfo> refInfo);
+	void wstop();
 
 private:
-    RefereeClientWorker * mWorker;
-    QThread mThread;
+	RefereeClientWorker * mWorker;
+	QThread mThread;
 };

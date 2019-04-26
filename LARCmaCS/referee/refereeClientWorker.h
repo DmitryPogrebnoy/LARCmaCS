@@ -11,26 +11,26 @@
 
 struct RefereeClientWorker : public QObject
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    RefereeClientWorker();
-    ~RefereeClientWorker();
+	RefereeClientWorker();
+	~RefereeClientWorker();
 
 public slots:
-    void start();
+	void start();
 
 private slots:
-    void processPendingDatagrams();
+	void processPendingDatagrams();
 
 signals:
-    void refereeInfoUpdate(QSharedPointer<RefereeInfo> refInfo);
+	void refereeInfoUpdate(QSharedPointer<RefereeInfo> refInfo);
 
 private:
-    bool open(qint16 port);
-    void close();
+	bool open(qint16 port);
+	void close();
 
-    static const QString hostName;
-    QUdpSocket mSocket;
-    QHostAddress mGroupAddress;
+	static const QString hostName;
+	QUdpSocket mSocket;
+	QHostAddress mGroupAddress;
 };

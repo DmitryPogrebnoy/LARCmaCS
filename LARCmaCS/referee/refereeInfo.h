@@ -4,7 +4,7 @@
 
 struct RefereeInfo
 {
-    State state;
-    TeamColour commandForTeam;
-    bool isPartOfFieldLeft;
+	State state;
+	TeamColour commandForTeam;
+	bool isPartOfFieldLeft;
 };
