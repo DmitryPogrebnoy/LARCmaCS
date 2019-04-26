@@ -3,8 +3,8 @@
 const QString RefereeClientWorker::hostName = QStringLiteral("224.5.23.2");
 
 RefereeClientWorker::RefereeClientWorker()
-	: mSocket(this),
-	  mGroupAddress(hostName)
+	: mSocket(this)
+	, mGroupAddress(hostName)
 {
 	connect(&mSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 }
@@ -34,13 +34,12 @@ void RefereeClientWorker::close()
 
 void RefereeClientWorker::processPendingDatagrams()
 {
-	QByteArray datagram;
-	RefereeMessage message;
 	GameState gState;
 	QSharedPointer<RefereeInfo> refInfo;
 	RefereeInfo tempRefInfo;
 
 	while (mSocket.hasPendingDatagrams()) {
+		QByteArray datagram;
 		int datagramSize = static_cast<int>(mSocket.pendingDatagramSize());
 		datagram.resize(datagramSize);
 
@@ -48,6 +47,7 @@ void RefereeClientWorker::processPendingDatagrams()
 		mSocket.readDatagram(datagram.data(), datagramSize);
 		refPacket.ParseFromArray(datagram.data(), datagramSize);
 
+		RefereeMessage message;
 		message = RefereeMessage(refPacket);
 		gState.updateGameState(message);
 		gState.updateRefereeInfoFromState(tempRefInfo);

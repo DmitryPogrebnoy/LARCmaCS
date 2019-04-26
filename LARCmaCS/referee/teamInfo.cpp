@@ -2,15 +2,16 @@
 
 
 TeamInfo::TeamInfo()
-	: name(""),
-	  score(0),
-	  redCards(0),
-	  yellowCards(0),
-	  timeoutTime(0),
-	  timeouts(0),
-	  goalkeeper(0) {}
+	: name("")
+	, score(0)
+	, redCards(0)
+	, yellowCards(0)
+	, timeoutTime(0)
+	, timeouts(0)
+	, goalkeeper(0)
+{}
 
-TeamInfo::TeamInfo(const Referee::TeamInfo &packet)
+TeamInfo::TeamInfo(const Referee::TeamInfo & packet)
 	: yellowCardTimes(packet.yellow_cards())
 {
 	name = QString::fromStdString(packet.name());

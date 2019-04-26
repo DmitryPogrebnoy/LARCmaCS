@@ -1,15 +1,15 @@
 #include "refereeMessage.h"
 
 RefereeMessage::RefereeMessage()
-	: yellowTeamInfo(),
-	  blueTeamInfo(),
-	  packetTimestamp(0),
-	  stageTimeLeft(0),
-	  commandTimestamp(0),
-	  commandCounter(0),
-	  ballPlacementPosition(Point(0,0)),
-	  blueTeamOnPositiveHalf(false),
-	  currentActionTimeRemaining(0)
+	: yellowTeamInfo()
+	, blueTeamInfo()
+	, packetTimestamp(0)
+	, stageTimeLeft(0)
+	, commandTimestamp(0)
+	, commandCounter(0)
+	, ballPlacementPosition(QPointF(0, 0))
+	, blueTeamOnPositiveHalf(false)
+	, currentActionTimeRemaining(0)
 {
 	command = Referee::HALT;
 	stage = Referee::NORMAL_FIRST_HALF;
@@ -17,8 +17,8 @@ RefereeMessage::RefereeMessage()
 }
 
 RefereeMessage::RefereeMessage(const Referee &packet)
-	: yellowTeamInfo(packet.yellow()),
-	  blueTeamInfo(packet.blue())
+	: yellowTeamInfo(packet.yellow())
+	, blueTeamInfo(packet.blue())
 {
 	packetTimestamp = packet.packet_timestamp();
 
@@ -29,9 +29,8 @@ RefereeMessage::RefereeMessage(const Referee &packet)
 	commandCounter = packet.command_counter();
 	commandTimestamp = packet.command_timestamp();
 
-	if (packet.has_designated_position())
-	{
-		ballPlacementPosition = Point(packet.designated_position());
+	if (packet.has_designated_position()) {
+		ballPlacementPosition = QPointF(packet.designated_position().x(),packet.designated_position().y());
 	}
 	// this is an optional field
 	// what to assign if packet hasn't designated_position?
@@ -40,8 +39,7 @@ RefereeMessage::RefereeMessage(const Referee &packet)
 
 	packet.game_event();
 
-	if (packet.has_next_command())
-	{
+	if (packet.has_next_command()) {
 		nextCommand = packet.next_command();
 	}
 	// this is an optional field
@@ -166,7 +164,7 @@ TeamInfo RefereeMessage::getBlueTeamInfo()
 	return blueTeamInfo;
 }
 
-Point RefereeMessage::getBallPlacementPosition()
+QPointF RefereeMessage::getBallPlacementPosition()
 {
 	return ballPlacementPosition;
 }

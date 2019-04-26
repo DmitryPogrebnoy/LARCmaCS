@@ -12,12 +12,9 @@ struct RefereeClient : public QObject
 public:
 	explicit RefereeClient();
 	~RefereeClient();
-	void start();
-	void stop();
 
 signals:
 	void refereeInfoUpdate(QSharedPointer<RefereeInfo> refInfo);
-	void wstop();
 
 private:
 	RefereeClientWorker * mWorker;

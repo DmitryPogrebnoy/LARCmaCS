@@ -1,7 +1,9 @@
 #pragma once
 
+
+#include <QPointF>
+
 #include "teamInfo.h"
-#include "refereeUtils.h"
 #include "ssl_referee.pb.h"
 
 struct RefereeMessage
@@ -48,7 +50,7 @@ private:
 	// millimetres and correspond to SSL-Vision coordinates. These fields are
 	// always either both present (in the case of a ball placement command) or
 	// both absent (in the case of any other command).
-	Point ballPlacementPosition;
+	QPointF ballPlacementPosition;
 
 	// Information about the direction of play.
 	// True, if the blue team will have it's goal on the positive x-axis of the ssl-vision coordinate system.
@@ -85,7 +87,7 @@ public:
 	quint64 getCommandTimestamp();
 	TeamInfo getYellowTeamInfo();
 	TeamInfo getBlueTeamInfo();
-	Point getBallPlacementPosition();
+	QPointF getBallPlacementPosition();
 	bool getBlueTeamOnPositiveHalf();
 	Referee::Command getNextCommand();
 	// getter for gameEvents

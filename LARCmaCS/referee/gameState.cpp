@@ -1,20 +1,18 @@
 #include "gameState.h"
 
 GameState::GameState()
-{
-	state = HALT;
-	forTeam = NEUTRAL;
-	ourTeam = NEUTRAL;
-	penaltyShootout = false;
-	partOfFieldLeft = false;
-	ballPlacementPosition = Point(0,0);
-}
+	: state(HALT)
+	, forTeam(NEUTRAL)
+	, ourTeam(NEUTRAL)
+	, penaltyShootout(false)
+	, partOfFieldLeft(false)
+	, ballPlacementPosition(QPointF(0, 0))
+{}
 
-void GameState::updateOurTeam(TeamColour team)
+void GameState::setOurTeam(TeamColour team)
 {
 	ourTeam = team;
 }
-
 
 void GameState::updateGameState(RefereeMessage &message)
 {
@@ -110,15 +108,14 @@ void GameState::updateGameState(RefereeMessage &message)
 			penaltyShootout = false;
 	}
 
-	if (ourTeam == BLUETEAM)
-	{
+	if (ourTeam == BLUETEAM) {
 		partOfFieldLeft = message.getBlueTeamOnPositiveHalf();
 	} else {
 		partOfFieldLeft = !message.getBlueTeamOnPositiveHalf();
 	}
 }
 
-void GameState::updateRefereeInfoFromState(RefereeInfo &refInfo)
+void GameState::updateRefereeInfoFromState(RefereeInfo & refInfo)
 {
 	refInfo.state = this->state;
 	refInfo.commandForTeam = this->forTeam;
@@ -140,7 +137,7 @@ TeamColour GameState::getOurTeam()
 	return ourTeam;
 }
 
-Point GameState::getBallPacementPostion()
+QPointF GameState::getBallPacementPostion()
 {
 	return ballPlacementPosition;
 }
@@ -157,26 +154,16 @@ bool GameState::isGameStateForOtherTeam()
 
 bool GameState::isDistanceToBallRequired()
 {
-	switch (state)
-	{
-		case STOP:
-		case PREPARE_KICKOFF:
+	if (state == STOP || state == PREPARE_KICKOFF) {
 			return true;
-		default:
-			break;
 	}
+
 
 	if (ourTeam != forTeam)
 	{
-		switch (state)
-		{
-			case BALL_PLACEMENT:
-			case INDIRECT_FREE:
-			case DIRECT_FREE:
-			case PREPARE_PENALTY:
-				return true;
-			default:
-				break;
+		if (state == BALL_PLACEMENT || state == INDIRECT_FREE
+				|| state == DIRECT_FREE || state == PREPARE_PENALTY) {
+			return true;
 		}
 	}
 

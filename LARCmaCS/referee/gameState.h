@@ -11,15 +11,15 @@ class GameState : public QObject
 public:
 
 	GameState();
-	void updateOurTeam(TeamColour ourTeam);
-	void updateGameState(RefereeMessage &message);
-	void updateRefereeInfoFromState(RefereeInfo &refInfo);
+	void setOurTeam(TeamColour ourTeam);
+	void updateGameState(RefereeMessage & message);
+	void updateRefereeInfoFromState(RefereeInfo & refInfo);
 
 
 	State getState();
 	TeamColour getForTeam();
 	TeamColour getOurTeam();
-	Point getBallPacementPostion();
+	QPointF getBallPacementPostion();
 
 	bool isGameStateForOurTeam();
 	bool isGameStateForOtherTeam();
@@ -35,5 +35,5 @@ private:
 	TeamColour ourTeam;
 	bool partOfFieldLeft;
 	bool penaltyShootout;
-	Point ballPlacementPosition;
+	QPointF ballPlacementPosition;
 };

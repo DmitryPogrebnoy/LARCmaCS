@@ -48,7 +48,7 @@ private:
 
 public:
 	TeamInfo();
-	TeamInfo(const Referee::TeamInfo &packet);
+	TeamInfo(const Referee::TeamInfo & packet);
 
 	QString getName();
 	quint32 getScore();
