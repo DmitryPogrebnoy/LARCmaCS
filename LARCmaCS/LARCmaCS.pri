@@ -33,6 +33,7 @@ INCLUDEPATH += \
     $${SHARED_DIR}/rfprotocol \
     $${MATLAB_DIR}/include \
     $$PWD/robots \
+    $$PWD/referee \
     $$PWD \
 
 SOURCES +=  \
@@ -58,7 +59,12 @@ SOURCES +=  \
 	$$PWD/robotReceiverWorker.cpp \
 	$$PWD/robotReceiver.cpp \
         $$PWD/connector.cpp \
-        $$PWD/matlabEngine.cpp
+        $$PWD/matlabEngine.cpp \
+        $$PWD/referee/gameState.cpp \
+        $$PWD/referee/refereeClient.cpp \
+        $$PWD/referee/refereeClientWorker.cpp \
+        $$PWD/referee/refereeMessage.cpp \
+        $$PWD/referee/teamInfo.cpp \
 
 HEADERS  += \
 	$${SHARED_DIR}/util/timer.h \
@@ -87,6 +93,12 @@ HEADERS  += \
         $$PWD/connector.h \
         $$PWD/engineInterface.h \
         $$PWD/matlabEngine.h
+        $$PWD/referee/refereeClient.h \
+        $$PWD/referee/refereeClientWorker.h \
+        $$PWD/referee/refereeInfo.h \
+        $$PWD/referee/refereeMessage.h \
+        $$PWD/referee/refereeUtils.h \
+        $$PWD/referee/teamInfo.h
 
 FORMS += \
 	$$PWD/larcmacs.ui \

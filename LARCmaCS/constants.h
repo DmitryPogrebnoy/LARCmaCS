@@ -23,6 +23,7 @@ public:
 	static const int ballAlgoPacketSize = 3;
 	static const unsigned  SSLVisionPort = 10006;
 	static const unsigned  SimVisionPort = 10020;
+    static const unsigned  refereePort = 10003;
 	static const int numOfCameras = 4;
 	static const int ruleLength = 7;
 	static const int ruleAmount = 12;
