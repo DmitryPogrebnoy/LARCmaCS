@@ -18,17 +18,18 @@ public:
     ~RefereeClientWorker();
 
 public slots:
-    void processPendingDatagrams();
-    bool open(qint16 port);
-    void close();
     void start();
-    void stop();
+
+private slots:
+    void processPendingDatagrams();
 
 signals:
     void refereeInfoUpdate(QSharedPointer<RefereeInfo> refInfo);
 
 private:
-    void init();
+    bool open(qint16 port);
+    void close();
+
     static const QString hostName;
     QUdpSocket mSocket;
     QHostAddress mGroupAddress;
