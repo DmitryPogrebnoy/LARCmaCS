@@ -16,7 +16,7 @@ RefereeMessage::RefereeMessage()
 	nextCommand = Referee::STOP;
 }
 
-RefereeMessage::RefereeMessage(const Referee &packet)
+RefereeMessage::RefereeMessage(const Referee & packet)
 	: yellowTeamInfo(packet.yellow())
 	, blueTeamInfo(packet.blue())
 {
@@ -129,52 +129,52 @@ QString RefereeMessage::toString(Referee::Command command)
 }
 
 
-Referee::Stage RefereeMessage::getStage()
+Referee::Stage RefereeMessage::getStage() const
 {
 	return stage;
 }
 
-qint32 RefereeMessage::getStageTimeLeft()
+qint32 RefereeMessage::getStageTimeLeft() const
 {
 	return stageTimeLeft;
 }
 
-Referee::Command RefereeMessage::getCommand()
+Referee::Command RefereeMessage::getCommand() const
 {
 	return command;
 }
 
-quint32 RefereeMessage::getCommandCounter()
+quint32 RefereeMessage::getCommandCounter() const
 {
 	return commandCounter;
 }
 
-quint64 RefereeMessage::getCommandTimestamp()
+quint64 RefereeMessage::getCommandTimestamp() const
 {
 	return commandTimestamp;
 }
 
-TeamInfo RefereeMessage::getYellowTeamInfo()
+TeamInfo RefereeMessage::getYellowTeamInfo() const
 {
 	return yellowTeamInfo;
 }
 
-TeamInfo RefereeMessage::getBlueTeamInfo()
+TeamInfo RefereeMessage::getBlueTeamInfo() const
 {
 	return blueTeamInfo;
 }
 
-QPointF RefereeMessage::getBallPlacementPosition()
+QPointF RefereeMessage::getBallPlacementPosition() const
 {
 	return ballPlacementPosition;
 }
 
-bool RefereeMessage::getBlueTeamOnPositiveHalf()
+bool RefereeMessage::getBlueTeamOnPositiveHalf() const
 {
 	return blueTeamOnPositiveHalf;
 }
 
-Referee::Command RefereeMessage::getNextCommand()
+Referee::Command RefereeMessage::getNextCommand() const
 {
 	return nextCommand;
 }
@@ -183,7 +183,7 @@ Referee::Command RefereeMessage::getNextCommand()
 
 // getter for ProposedGameEvents
 
-qint32 RefereeMessage::getCurrentActionTimeRemaining()
+qint32 RefereeMessage::getCurrentActionTimeRemaining() const
 {
 	return currentActionTimeRemaining;
 }

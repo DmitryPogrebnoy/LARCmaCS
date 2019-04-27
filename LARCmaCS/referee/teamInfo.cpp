@@ -38,63 +38,63 @@ TeamInfo::TeamInfo(const Referee::TeamInfo & packet)
 }
 
 
-QString TeamInfo::getName()
+QString TeamInfo::getName() const
 {
 	return name;
 }
 
-quint32 TeamInfo::getScore()
+quint32 TeamInfo::getScore() const
 {
 	return score;
 }
 
 
-quint32 TeamInfo::getRedCards()
+quint32 TeamInfo::getRedCards() const
 {
 	return redCards;
 }
 
-QVector<quint32> TeamInfo::getYellowCardTimes()
+QVector<quint32> TeamInfo::getYellowCardTimes() const
 {
 	return yellowCardTimes;
 }
 
-quint32 TeamInfo::getYellowCards()
+quint32 TeamInfo::getYellowCards() const
 {
 	return yellowCards;
 }
 
-quint32 TeamInfo::getTimeouts()
+quint32 TeamInfo::getTimeouts() const
 {
 	return timeouts;
 }
 
-quint32 TeamInfo::getTimeoutTime()
+quint32 TeamInfo::getTimeoutTime() const
 {
 	return timeoutTime;
 }
 
-quint32 TeamInfo::getGoalkeeper()
+quint32 TeamInfo::getGoalkeeper() const
 {
 	return goalkeeper;
 }
 
-quint32 TeamInfo::getFoulCounter()
+quint32 TeamInfo::getFoulCounter() const
 {
 	return foulCounter;
 }
 
-quint32 TeamInfo::getBallPlacementFailures()
+quint32 TeamInfo::getBallPlacementFailures() const
 {
 	return ballPlacementFailures;
 }
 
-bool TeamInfo::getCanPlaceBall()
+bool TeamInfo::getCanPlaceBall() const
 {
 	return canPlaceBall;
 }
 
-quint32 TeamInfo::getMaxAllowedBots()
+quint32 TeamInfo::getMaxAllowedBots() const
 {
 	return maxAllowedBots;
 }

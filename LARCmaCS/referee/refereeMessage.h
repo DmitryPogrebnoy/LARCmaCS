@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <QPointF>
 
 #include "teamInfo.h"
@@ -78,21 +77,21 @@ private:
 
 public:
 	RefereeMessage();
-	RefereeMessage(const Referee &packet);
+	RefereeMessage(const Referee & packet);
 
-	Referee::Stage getStage();
-	qint32 getStageTimeLeft();
-	Referee::Command getCommand();
-	quint32 getCommandCounter();
-	quint64 getCommandTimestamp();
-	TeamInfo getYellowTeamInfo();
-	TeamInfo getBlueTeamInfo();
-	QPointF getBallPlacementPosition();
-	bool getBlueTeamOnPositiveHalf();
-	Referee::Command getNextCommand();
+	Referee::Stage getStage() const;
+	qint32 getStageTimeLeft() const;
+	Referee::Command getCommand() const;
+	quint32 getCommandCounter() const;
+	quint64 getCommandTimestamp() const;
+	TeamInfo getYellowTeamInfo() const;
+	TeamInfo getBlueTeamInfo() const;
+	QPointF getBallPlacementPosition() const;
+	bool getBlueTeamOnPositiveHalf() const;
+	Referee::Command getNextCommand() const;
 	// getter for gameEvents
 	// getter for ProposedGameEvents
-	qint32 getCurrentActionTimeRemaining();
+	qint32 getCurrentActionTimeRemaining() const;
 
 	static QString toString(Referee::Stage stage);
 	static QString toString(Referee::Command command);

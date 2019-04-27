@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QString>
 #include <QVector>
+
 #include "ssl_referee.pb.h"
 
 struct TeamInfo
@@ -50,16 +50,16 @@ public:
 	TeamInfo();
 	TeamInfo(const Referee::TeamInfo & packet);
 
-	QString getName();
-	quint32 getScore();
-	quint32 getRedCards();
-	QVector<quint32> getYellowCardTimes();
-	quint32 getYellowCards();
-	quint32 getTimeouts();
-	quint32 getTimeoutTime();
-	quint32 getGoalkeeper();
-	quint32 getFoulCounter();
-	quint32 getBallPlacementFailures();
-	bool getCanPlaceBall();
-	quint32 getMaxAllowedBots();
+	QString getName() const;
+	quint32 getScore() const;
+	quint32 getRedCards() const;
+	QVector<quint32> getYellowCardTimes() const;
+	quint32 getYellowCards() const;
+	quint32 getTimeouts() const;
+	quint32 getTimeoutTime() const;
+	quint32 getGoalkeeper() const;
+	quint32 getFoulCounter() const;
+	quint32 getBallPlacementFailures() const;
+	bool getCanPlaceBall() const;
+	quint32 getMaxAllowedBots() const;
 };

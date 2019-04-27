@@ -20,11 +20,8 @@ void RefereeClientWorker::start()
 bool RefereeClientWorker::open(qint16 port)
 {
 	close();
-	if (mSocket.bind(QHostAddress::AnyIPv4, port, QUdpSocket::ShareAddress)
-			&& mSocket.joinMulticastGroup(mGroupAddress)) {
-		return true;
-	}
-	return false;
+	return mSocket.bind(QHostAddress::AnyIPv4, port, QUdpSocket::ShareAddress)
+				&& mSocket.joinMulticastGroup(mGroupAddress);
 }
 
 void RefereeClientWorker::close()
@@ -34,9 +31,7 @@ void RefereeClientWorker::close()
 
 void RefereeClientWorker::processPendingDatagrams()
 {
-	GameState gState;
 	QSharedPointer<RefereeInfo> refInfo;
-	RefereeInfo tempRefInfo;
 
 	while (mSocket.hasPendingDatagrams()) {
 		QByteArray datagram;
@@ -49,6 +44,9 @@ void RefereeClientWorker::processPendingDatagrams()
 
 		RefereeMessage message;
 		message = RefereeMessage(refPacket);
+
+		GameState gState;
+		RefereeInfo tempRefInfo;
 		gState.updateGameState(message);
 		gState.updateRefereeInfoFromState(tempRefInfo);
 

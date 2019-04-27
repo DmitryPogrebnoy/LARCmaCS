@@ -1,168 +1,159 @@
 #include "gameState.h"
 
 GameState::GameState()
-	: state(HALT)
-	, forTeam(NEUTRAL)
-	, ourTeam(NEUTRAL)
-	, penaltyShootout(false)
-	, partOfFieldLeft(false)
-	, ballPlacementPosition(QPointF(0, 0))
+	: mState(HALT)
+	, mForTeam(NEUTRAL)
+	, mOurTeam(NEUTRAL)
+	, mPenaltyShootout(false)
+	, mPartOfFieldLeft(false)
+	, mBallPlacementPosition(QPointF(0, 0))
 {}
 
 void GameState::setOurTeam(TeamColour team)
 {
-	ourTeam = team;
+	mOurTeam = team;
 }
 
-void GameState::updateGameState(RefereeMessage &message)
+void GameState::updateGameState(const RefereeMessage & message)
 {
-
-	switch (message.getCommand())
-	{
+	switch (message.getCommand()) {
 		case Referee::HALT:
-			state = HALT;
-			forTeam = NEUTRAL;
+			mState = HALT;
+			mForTeam = NEUTRAL;
 			break;
 		case Referee::STOP:
-			state = STOP;
-			forTeam = NEUTRAL;
+			mState = STOP;
+			mForTeam = NEUTRAL;
 			break;
 		case Referee::NORMAL_START:
-			if (state == PREPARE_KICKOFF) state = KICKOFF;
-			if (state == PREPARE_PENALTY) state = PENALTY;
+			if (mState == PREPARE_KICKOFF) mState = KICKOFF;
+			if (mState == PREPARE_PENALTY) mState = PENALTY;
 			break;
 		case Referee::FORCE_START:
-			state = RUNNING; // neutral restart
-			forTeam = NEUTRAL;
+			mState = RUNNING; // neutral restart
+			mForTeam = NEUTRAL;
 			break;
 		case Referee::PREPARE_KICKOFF_YELLOW:
-			state = PREPARE_KICKOFF;
-			forTeam = YELLOWTEAM;
+			mState = PREPARE_KICKOFF;
+			mForTeam = YELLOWTEAM;
 			break;
 		case Referee::PREPARE_KICKOFF_BLUE:
-			state = PREPARE_KICKOFF;
-			forTeam = BLUETEAM;
+			mState = PREPARE_KICKOFF;
+			mForTeam = BLUETEAM;
 			break;
 		case Referee::PREPARE_PENALTY_YELLOW:
-			state = PREPARE_PENALTY;
-			forTeam = YELLOWTEAM;
+			mState = PREPARE_PENALTY;
+			mForTeam = YELLOWTEAM;
 			break;
 		case Referee::PREPARE_PENALTY_BLUE:
-			state = PREPARE_PENALTY;
-			forTeam = BLUETEAM;
+			mState = PREPARE_PENALTY;
+			mForTeam = BLUETEAM;
 			break;
 		case Referee::DIRECT_FREE_YELLOW:
-			state = DIRECT_FREE;
-			forTeam = YELLOWTEAM;
+			mState = DIRECT_FREE;
+			mForTeam = YELLOWTEAM;
 			break;
 		case Referee::DIRECT_FREE_BLUE:
-			state = DIRECT_FREE;
-			forTeam = BLUETEAM;
+			mState = DIRECT_FREE;
+			mForTeam = BLUETEAM;
 			break;
 		case Referee::INDIRECT_FREE_YELLOW:
-			state = INDIRECT_FREE;
-			forTeam = YELLOWTEAM;
+			mState = INDIRECT_FREE;
+			mForTeam = YELLOWTEAM;
 			break;
 		case Referee::INDIRECT_FREE_BLUE:
-			state = INDIRECT_FREE;
-			forTeam = BLUETEAM;
+			mState = INDIRECT_FREE;
+			mForTeam = BLUETEAM;
 			break;
 		case Referee::TIMEOUT_YELLOW:
-			state = TIMEOUT;
-			forTeam = YELLOWTEAM;
+			mState = TIMEOUT;
+			mForTeam = YELLOWTEAM;
 			break;
 		case Referee::TIMEOUT_BLUE:
-			state = TIMEOUT;
-			forTeam = BLUETEAM;
+			mState = TIMEOUT;
+			mForTeam = BLUETEAM;
 			break;
 		case Referee::GOAL_YELLOW:
-			state = STOP;
-			forTeam = NEUTRAL;
+			mState = STOP;
+			mForTeam = NEUTRAL;
 			break;
 		case Referee::GOAL_BLUE:
-			state = STOP;
-			forTeam = NEUTRAL;
+			mState = STOP;
+			mForTeam = NEUTRAL;
 			break;
 		case Referee::BALL_PLACEMENT_YELLOW:
-			state = BALL_PLACEMENT;
-			forTeam = YELLOWTEAM;
-			ballPlacementPosition = message.getBallPlacementPosition();
+			mState = BALL_PLACEMENT;
+			mForTeam = YELLOWTEAM;
+			mBallPlacementPosition = message.getBallPlacementPosition();
 			break;
 		case Referee::BALL_PLACEMENT_BLUE:
-			state = BALL_PLACEMENT;
-			forTeam = BLUETEAM;
-			ballPlacementPosition = message.getBallPlacementPosition();
+			mState = BALL_PLACEMENT;
+			mForTeam = BLUETEAM;
+			mBallPlacementPosition = message.getBallPlacementPosition();
 			break;
 	}
 
-	switch (message.getStage())
-	{
+	switch (message.getStage()) {
 		case Referee::PENALTY_SHOOTOUT:
-			penaltyShootout = true;
+			mPenaltyShootout = true;
 			break;
 		case Referee::POST_GAME:
-			state = POST_GAME;
-			forTeam = NEUTRAL;
+			mState = POST_GAME;
+			mForTeam = NEUTRAL;
 			break;
 		default:
-			penaltyShootout = false;
+			mPenaltyShootout = false;
 	}
 
-	if (ourTeam == BLUETEAM) {
-		partOfFieldLeft = message.getBlueTeamOnPositiveHalf();
-	} else {
-		partOfFieldLeft = !message.getBlueTeamOnPositiveHalf();
-	}
+	mPartOfFieldLeft = mOurTeam == BLUETEAM && message.getBlueTeamOnPositiveHalf();
 }
 
 void GameState::updateRefereeInfoFromState(RefereeInfo & refInfo)
 {
-	refInfo.state = this->state;
-	refInfo.commandForTeam = this->forTeam;
-	refInfo.isPartOfFieldLeft = this->partOfFieldLeft;
+	refInfo.state = mState;
+	refInfo.commandForTeam = mForTeam;
+	refInfo.isPartOfFieldLeft = mPartOfFieldLeft;
 }
 
-State GameState::getState()
+State GameState::getState() const
 {
-	return state;
+	return mState;
 }
 
-TeamColour GameState::getForTeam()
+TeamColour GameState::getForTeam() const
 {
-	return forTeam;
+	return mForTeam;
 }
 
-TeamColour GameState::getOurTeam()
+TeamColour GameState::getOurTeam() const
 {
-	return ourTeam;
+	return mOurTeam;
 }
 
-QPointF GameState::getBallPacementPostion()
+QPointF GameState::getBallPacementPostion() const
 {
-	return ballPlacementPosition;
+	return mBallPlacementPosition;
 }
 
-bool GameState::isGameStateForOurTeam()
+bool GameState::isGameStateForOurTeam() const
 {
-	return (forTeam == NEUTRAL) || (forTeam == ourTeam);
+	return (mForTeam == NEUTRAL) || (mForTeam == mOurTeam);
 }
 
-bool GameState::isGameStateForOtherTeam()
+bool GameState::isGameStateForOtherTeam() const
 {
 	return !isGameStateForOurTeam();
 }
 
-bool GameState::isDistanceToBallRequired()
+bool GameState::isDistanceToBallRequired() const
 {
-	if (state == STOP || state == PREPARE_KICKOFF) {
+	if (mState == STOP || mState == PREPARE_KICKOFF) {
 			return true;
 	}
 
-
-	if (ourTeam != forTeam)
-	{
-		if (state == BALL_PLACEMENT || state == INDIRECT_FREE
-				|| state == DIRECT_FREE || state == PREPARE_PENALTY) {
+	if (mOurTeam != mForTeam) {
+		if (mState == BALL_PLACEMENT || mState == INDIRECT_FREE
+				|| mState == DIRECT_FREE || mState == PREPARE_PENALTY) {
 			return true;
 		}
 	}
@@ -170,17 +161,17 @@ bool GameState::isDistanceToBallRequired()
 	return false;
 }
 
-bool GameState::isPenaltyShootout()
+bool GameState::isPenaltyShootout() const
 {
-	return penaltyShootout;
+	return mPenaltyShootout;
 }
 
-bool GameState::isPartOfFieldLeft()
+bool GameState::isPartOfFieldLeft() const
 {
-	return partOfFieldLeft;
+	return mPartOfFieldLeft;
 }
 
-bool GameState::isRunning()
+bool GameState::isRunning() const
 {
-	return state == RUNNING;
+	return mState == RUNNING;
 }
