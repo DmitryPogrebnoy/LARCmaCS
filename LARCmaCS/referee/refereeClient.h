@@ -14,7 +14,7 @@ public:
 	~RefereeClient();
 
 signals:
-	void refereeInfoUpdate(QSharedPointer<RefereeInfo> refInfo);
+	void refereeInfoUpdate(const QSharedPointer<RefereeInfo> & refInfo);
 
 private:
 	RefereeClientWorker * mWorker;

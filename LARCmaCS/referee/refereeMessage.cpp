@@ -30,7 +30,7 @@ RefereeMessage::RefereeMessage(const Referee &packet)
 	commandTimestamp = packet.command_timestamp();
 
 	if (packet.has_designated_position()) {
-		ballPlacementPosition = QPointF(packet.designated_position().x(),packet.designated_position().y());
+		ballPlacementPosition = QPointF(packet.designated_position().x(), packet.designated_position().y());
 	}
 	// this is an optional field
 	// what to assign if packet hasn't designated_position?

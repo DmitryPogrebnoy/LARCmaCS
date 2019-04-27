@@ -24,7 +24,7 @@ private slots:
 	void processPendingDatagrams();
 
 signals:
-	void refereeInfoUpdate(QSharedPointer<RefereeInfo> refInfo);
+	void refereeInfoUpdate(const QSharedPointer<RefereeInfo> & refInfo);
 
 private:
 	bool open(qint16 port);
