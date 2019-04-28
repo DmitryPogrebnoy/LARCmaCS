@@ -32,4 +32,5 @@ private:
 	static const QString hostName;
 	QUdpSocket mSocket;
 	QHostAddress mGroupAddress;
+	QSharedPointer<RefereeInfo> mRefInfo;
 };

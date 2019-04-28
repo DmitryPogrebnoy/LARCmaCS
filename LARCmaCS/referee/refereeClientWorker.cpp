@@ -31,8 +31,6 @@ void RefereeClientWorker::close()
 
 void RefereeClientWorker::processPendingDatagrams()
 {
-	QSharedPointer<RefereeInfo> refInfo;
-
 	while (mSocket.hasPendingDatagrams()) {
 		QByteArray datagram;
 		int datagramSize = static_cast<int>(mSocket.pendingDatagramSize());
@@ -50,11 +48,16 @@ void RefereeClientWorker::processPendingDatagrams()
 		gState.updateGameState(message);
 		gState.updateRefereeInfoFromState(tempRefInfo);
 
-		if (tempRefInfo.state != refInfo->state
-				|| tempRefInfo.commandForTeam != refInfo->commandForTeam
-				|| tempRefInfo.isPartOfFieldLeft != refInfo->isPartOfFieldLeft) {
-			refInfo = QSharedPointer<RefereeInfo>(new RefereeInfo(tempRefInfo));
-			emit refereeInfoUpdate(refInfo);
+		if (mRefInfo != nullptr) {
+			if (tempRefInfo.state != mRefInfo->state
+					|| tempRefInfo.commandForTeam != mRefInfo->commandForTeam
+					|| tempRefInfo.isPartOfFieldLeft != mRefInfo->isPartOfFieldLeft) {
+				mRefInfo = QSharedPointer<RefereeInfo>(new RefereeInfo(tempRefInfo));
+				emit refereeInfoUpdate(mRefInfo);
+			}
+		} else {
+			mRefInfo = QSharedPointer<RefereeInfo>(new RefereeInfo(tempRefInfo));
+			emit refereeInfoUpdate(mRefInfo);
 		}
 	}
 }
