@@ -115,7 +115,7 @@ void GameState::updateRefereeInfoFromState(RefereeInfo & refInfo)
 	refInfo.isPartOfFieldLeft = mPartOfFieldLeft;
 }
 
-State GameState::getState() const
+const State & GameState::getState() const
 {
 	return mState;
 }
@@ -130,7 +130,7 @@ TeamColour GameState::getOurTeam() const
 	return mOurTeam;
 }
 
-QPointF GameState::getBallPacementPostion() const
+const QPointF & GameState::getBallPacementPostion() const
 {
 	return mBallPlacementPosition;
 }

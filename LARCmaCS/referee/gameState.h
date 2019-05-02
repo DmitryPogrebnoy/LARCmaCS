@@ -16,10 +16,10 @@ public:
 	void updateGameState(const RefereeMessage & message);
 	void updateRefereeInfoFromState(RefereeInfo & refInfo);
 
-	State getState() const;
+	const State & getState() const;
 	TeamColour getForTeam() const;
 	TeamColour getOurTeam() const;
-	QPointF getBallPacementPostion() const;
+	const QPointF & getBallPacementPostion() const;
 
 	bool isGameStateForOurTeam() const;
 	bool isGameStateForOtherTeam() const;
