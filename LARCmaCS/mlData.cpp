@@ -15,7 +15,7 @@ MlData::MlData(RCConfig conf)
 	Back_Length  = mxCreateDoubleMatrix(1, 1, mxREAL);
 	ballInside   = mxCreateDoubleMatrix(Constants::maxRobotsInTeam, 1, mxREAL);
 	state        = mxCreateDoubleScalar(0);
-	team		 = mxCreateDoubleScalar(0);
+	team         = mxCreateDoubleScalar(0);
 	partOfFieldLeft = mxCreateDoubleScalar(0);
 }
 
