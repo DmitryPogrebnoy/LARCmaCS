@@ -3,19 +3,21 @@
 #include <QThread>
 
 #include "refereeClientWorker.h"
+#include "sharedRes.h"
 
 struct RefereeClient : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit RefereeClient();
+	explicit RefereeClient(SharedRes * sharedRes);
 	~RefereeClient();
 
-signals:
-	void refereeInfoUpdate(const QSharedPointer<RefereeInfo> & refInfo);
+public slots:
+	void updateReferee(const QSharedPointer<RefereeInfo> & refInfo);
 
 private:
 	RefereeClientWorker * mWorker;
 	QThread mThread;
+	SharedRes * mSharedRes;
 };

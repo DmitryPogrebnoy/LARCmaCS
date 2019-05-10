@@ -47,6 +47,21 @@ QSharedPointer<SSL_WrapperPacket> SharedRes::getDetection(int camID)
 	}
 }
 
+int SharedRes::getRefereeState()
+{
+	return mRefereeState;
+}
+
+int SharedRes::getRefereeTeam()
+{
+	return  mRefereeTeam;
+}
+
+bool SharedRes::getRefereePartOfFildLeft()
+{
+	return mRefereePartOfFieldLeft;
+}
+
 QSharedPointer<QVector<QSharedPointer<SSL_WrapperPacket> > > SharedRes::getDetection()
 {
 	return mDetection;
@@ -73,4 +88,11 @@ void SharedRes::setGeometry(const QSharedPointer<SSL_WrapperPacket> & geometry)
 {
 	QWriteLocker locker(&mGeometryLock);
 	mGeometry = geometry;
+}
+
+void SharedRes::setRefereeData(int state, int team, bool partOfField)
+{
+	mRefereeState = state;
+	mRefereeTeam = team;
+	mRefereePartOfFieldLeft = partOfField;
 }

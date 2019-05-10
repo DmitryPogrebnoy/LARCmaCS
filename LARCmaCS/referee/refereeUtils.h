@@ -1,7 +1,5 @@
 #pragma once
 
-#include "ssl_referee.pb.h"
-
 enum TeamColour
 {
 	NEUTRAL,

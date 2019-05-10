@@ -33,4 +33,7 @@ public:
 	mxArray *Back_Amount;
 	mxArray *Back_Length;
 	mxArray *ballInside;
+	mxArray *state;
+	mxArray *team;
+	mxArray *partOfFieldLeft;
 };

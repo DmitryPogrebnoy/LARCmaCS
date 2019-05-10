@@ -1,6 +1,6 @@
 #include "refereeClientWorker.h"
 
-const QString RefereeClientWorker::hostName = QStringLiteral("224.5.23.2");
+const QString RefereeClientWorker::hostName = QStringLiteral("224.5.23.1");
 
 RefereeClientWorker::RefereeClientWorker()
 	: mSocket(this)

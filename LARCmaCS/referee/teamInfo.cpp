@@ -1,6 +1,5 @@
 #include "teamInfo.h"
 
-
 TeamInfo::TeamInfo()
 	: name("")
 	, score(0)

@@ -10,6 +10,8 @@
 #include "remotecontrol.h"
 #include "reference.h"
 #include "robotReceiver.h"
+#include "referee/refereeClient.h"
+
 
 #define NUM_CONTROL_ROBOTS 12
 
@@ -46,6 +48,7 @@ private:
 	QUdpSocket socket;
 	RobotReceiver robotReceiver;
 	bool mIsSim;
+	RefereeClient referee;
 
 private slots:
 	void UpdateSSLFPS(const QString & message);
