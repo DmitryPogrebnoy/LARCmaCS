@@ -14,7 +14,7 @@ void GameState::setOurTeam(TeamColour team)
 	mOurTeam = team;
 }
 
-void GameState::updateGameState(const RefereeMessage & message)
+void GameState::updateGameState(const RefereeMessage & message, int prevState)
 {
 	switch (message.getCommand()) {
 		case Referee::HALT:
@@ -26,8 +26,12 @@ void GameState::updateGameState(const RefereeMessage & message)
 			mForTeam = NEUTRAL;
 			break;
 		case Referee::NORMAL_START:
-			if (mState == PREPARE_KICKOFF) mState = KICKOFF;
-			if (mState == PREPARE_PENALTY) mState = PENALTY;
+			if (prevState == PREPARE_KICKOFF || prevState == KICKOFF) {
+				mState = KICKOFF;
+			}
+			if (prevState == PREPARE_PENALTY || prevState == PENALTY) {
+				mState = PENALTY;
+			}
 			break;
 		case Referee::FORCE_START:
 			mState = RUNNING; // neutral restart

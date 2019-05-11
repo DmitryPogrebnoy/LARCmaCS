@@ -1,4 +1,5 @@
 #include "refereeClientWorker.h"
+#include "QDebug"
 
 const QString RefereeClientWorker::hostName = QStringLiteral("224.5.23.1");
 
@@ -45,7 +46,13 @@ void RefereeClientWorker::processPendingDatagrams()
 
 		GameState gState;
 		RefereeInfo tempRefInfo;
-		gState.updateGameState(message);
+
+		if (mRefInfo != nullptr) {
+			gState.updateGameState(message, mRefInfo->state);
+		} else {
+			gState.updateGameState(message, HALT);
+		}
+
 		gState.updateRefereeInfoFromState(tempRefInfo);
 
 		if (mRefInfo != nullptr) {

@@ -13,7 +13,7 @@ struct GameState : public QObject
 public:
 	GameState();
 	void setOurTeam(TeamColour ourTeam);
-	void updateGameState(const RefereeMessage & message);
+	void updateGameState(const RefereeMessage & message, int prevState);
 	void updateRefereeInfoFromState(RefereeInfo & refInfo);
 
 	const State & getState() const;
