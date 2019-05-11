@@ -33,6 +33,7 @@ public slots:
 private slots:
 	void formStatistics();
 	void processPendingDatagrams();
+	void updateCameraStatus();
 
 signals:
 	void clientOpen(unsigned short port);
@@ -48,8 +49,10 @@ private:
 	static const QString visionIP;
 	QUdpSocket mSocket;
 	QTimer mStatisticsTimer;
+	QTimer mCameraCheckTimer;
 	QHostAddress mGroupAddress;
 	int mTotalPacketsNum = 0;
 	int mPacketsPerSecond = 0;
 	bool mIsSimEnabledFlag = false;
+	QVector<bool> mCameraStatuses;
 };
