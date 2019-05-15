@@ -25,7 +25,7 @@ public:
 	static const unsigned  SSLVisionPort = 10006;
 	static const unsigned  SimVisionPort = 10020;
 	static const int numOfCameras = 4;
-	static const int ruleLength = 7;
+	static const int ruleLength = 13;
 	static const int ruleAmount = 12;
 	static const int matlabOutputBufferSize = 2048;
 };

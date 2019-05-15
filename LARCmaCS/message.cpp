@@ -11,6 +11,8 @@ Message::Message() :
 	, mKickerChargeEnable(0)
 	, mKickUp(0)
 	, mKickForward(0)
+	, mBeep(0)
+	, mAutoKick(0)
 {}
 
 void Message::setSpeedX(int speedX)
@@ -63,6 +65,15 @@ void Message::setRobotNumber(int number)
 	mRobotNumber = number - 1;
 }
 
+void Message::setBeep(int beep)
+{
+	mBeep = beep;
+}
+void Message::setAutoKick(int autoKick)
+{
+	mAutoKick = autoKick;
+}
+
 QByteArray Message::generateByteArray()
 {
 	QByteArray ba;
@@ -82,13 +93,11 @@ QByteArray Message::generateByteArray()
 	ds << (quint8)mKickUp;
 	ds << (quint8)mKickForward;
 
-	quint8 beeperState = 0;
-	ds << beeperState;
+	ds << (quint8)mBeep;
 
 	ds << (quint8)mDribblerEnable;
 	ds << (quint8)mKickerChargeEnable;
-	quint8 bskickState = 0;
-	ds << bskickState;
+	ds << (quint8)mAutoKick;
 
 	return ba;
 }

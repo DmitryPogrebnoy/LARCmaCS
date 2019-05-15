@@ -28,7 +28,8 @@ float GrSimRobot::fromPower2Speed(int power)
 
 void GrSimRobot::formControlPacket(QByteArray & command, int numOfRobot, int speedX, int speedY, int speedR,
 								   bool kickUp, bool kickForward, int kickVoltage,
-								   bool enableSpinner, int spinnerSpeed)
+								   bool enableSpinner, int spinnerSpeed, int autoKick,
+								   bool kickerCharge, bool beep)
 {
 	grSim_Packet packet;
 	bool yellow = false;

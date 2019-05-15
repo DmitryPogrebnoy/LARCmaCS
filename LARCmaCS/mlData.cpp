@@ -31,7 +31,7 @@ MlData::MlData(const MlData &dat)
 	Yellow       = mxCreateDoubleMatrix(Constants::maxRobotsInTeam, 4, mxREAL);
 	memcpy(Yellow, &dat.Yellow, sizeof(Yellow));
 
-	Rule         = mxCreateDoubleMatrix(config.RULE_LENGTH, config.RULE_AMOUNT, mxREAL);
+	Rule         = mxCreateDoubleMatrix(Constants::ruleLength, Constants::ruleAmount, mxREAL);
 	memcpy(Rule, &dat.Rule, sizeof(Rule));
 
 	Back_Params  = mxCreateDoubleMatrix(config.BACK_LENGTH, config.BACK_AMOUNT, mxREAL);

@@ -155,7 +155,7 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 	memcpy(mxGetPr(mMatlabData.Ball), packetssl->balls, Constants::ballAlgoPacketSize * sizeof(double));
 	memcpy(mxGetPr(mMatlabData.Blue), packetssl->robots_blue, Constants::robotAlgoPacketSize * sizeof(double));
 	memcpy(mxGetPr(mMatlabData.Yellow), packetssl->robots_yellow, Constants::robotAlgoPacketSize * sizeof(double));
-	memcpy(mxGetPr(mMatlabData.fieldInfo), &packetssl->fieldInfo, Constants::fieldInfoSize * sizeof(double));
+	memcpy(mxGetPr(mMatlabData.fieldInfo), packetssl->fieldInfo, Constants::fieldInfoSize * sizeof(double));
 	//memcpy(mxGetPr(mMatlabData.ballInside), &mIsBallInside, sizeof(double));
 
 
@@ -191,6 +191,12 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 			rule[i].mSpeedR = ruleArray[5 * Constants::ruleAmount + i];
 			rule[i].mKickUp = ruleArray[6 * Constants::ruleAmount + i];
 			rule[i].mKickForward = ruleArray[4 * Constants::ruleAmount + i];
+			rule[i].mAutoKick = ruleArray[7 * Constants::ruleAmount + i];
+			rule[i].mKickerVoltageLevel = ruleArray[8 * Constants::ruleAmount + i];
+			rule[i].mDribblerEnable = ruleArray[9 * Constants::ruleAmount + i];
+			rule[i].mSpeedDribbler = ruleArray[10 * Constants::ruleAmount + i];
+			rule[i].mKickerChargeEnable = ruleArray[11 * Constants::ruleAmount + i];
+			rule[i].mBeep = ruleArray[12 * Constants::ruleAmount + i];
 		}
 	}
 	emit newData(rule);

@@ -16,6 +16,8 @@ public:
 	void setKickUp(int kickUp);
 	void setKickForward(int kickForward);
 	void setRobotNumber(int number);
+	void setBeep(int beep);
+	void setAutoKick(int autoKick);
 	QByteArray generateByteArray();
 
 private:
@@ -29,4 +31,6 @@ private:
 	int mKickUp;
 	int mKickForward;
 	int mRobotNumber;
+	int mBeep;
+	int mAutoKick;
 };
