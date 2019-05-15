@@ -40,7 +40,6 @@ private:
 	// This value changes only when a new command is issued, not on each packet.
 	quint64 commandTimestamp;
 
-
 	// Information about the two teams.
 	TeamInfo yellowTeamInfo;
 	TeamInfo blueTeamInfo;

@@ -128,7 +128,6 @@ QString RefereeMessage::toString(Referee::Command command)
 	}
 }
 
-
 Referee::Stage RefereeMessage::getStage() const
 {
 	return stage;

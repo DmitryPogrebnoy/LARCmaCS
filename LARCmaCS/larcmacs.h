@@ -12,7 +12,6 @@
 #include "robotReceiver.h"
 #include "referee/refereeClient.h"
 
-
 #define NUM_CONTROL_ROBOTS 12
 
 namespace Ui

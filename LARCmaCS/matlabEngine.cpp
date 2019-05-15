@@ -145,11 +145,22 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 	memcpy(mxGetPr(mMatlabData.Yellow), packetssl->robots_yellow, Constants::robotAlgoPacketSize * sizeof(double));
 	//memcpy(mxGetPr(mMatlabData.ballInside), &mIsBallInside, sizeof(double));
 
+	double state = mSharedRes->getRefereeState();
+	memcpy(mxGetPr(mMatlabData.state), &state, sizeof(double));
+
+	double team = mSharedRes->getRefereeTeam();
+	memcpy(mxGetPr(mMatlabData.team), &team, sizeof(double));
+
+	double partOfFied = mSharedRes->getRefereePartOfFildLeft();
+	memcpy(mxGetPr(mMatlabData.partOfFieldLeft), &partOfFied, sizeof(double));
 
 	engPutVariable(mMatlabData.ep, "Balls", mMatlabData.Ball);
 	engPutVariable(mMatlabData.ep, "Blues", mMatlabData.Blue);
 	engPutVariable(mMatlabData.ep, "Yellows", mMatlabData.Yellow);
 	//engPutVariable(mMatlabData.ep, "ballInside", mMatlabData.ballInside);
+	engPutVariable(mMatlabData.ep, "state", mMatlabData.state);
+	engPutVariable(mMatlabData.ep, "commandForTeam", mMatlabData.team);
+	engPutVariable(mMatlabData.ep, "partOfFieldLeft", mMatlabData.partOfFieldLeft);
 	evalString(mMatlabData.config.file_of_matlab);
 
 // Забираем Rules и очищаем его в воркспейсе

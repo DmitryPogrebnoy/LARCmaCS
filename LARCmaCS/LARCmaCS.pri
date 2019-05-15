@@ -92,7 +92,8 @@ HEADERS  += \
         $$PWD/robotReceiver.h \
         $$PWD/connector.h \
         $$PWD/engineInterface.h \
-        $$PWD/matlabEngine.h
+        $$PWD/matlabEngine.h \
+        $$PWD/referee/gameState.h \
         $$PWD/referee/refereeClient.h \
         $$PWD/referee/refereeClientWorker.h \
         $$PWD/referee/refereeInfo.h \

@@ -1,5 +1,4 @@
 #include "refereeClientWorker.h"
-#include "QDebug"
 
 const QString RefereeClientWorker::hostName = QStringLiteral("224.5.23.1");
 

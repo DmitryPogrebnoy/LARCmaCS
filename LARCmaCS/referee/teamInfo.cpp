@@ -36,7 +36,6 @@ TeamInfo::TeamInfo(const Referee::TeamInfo & packet)
 	canPlaceBall = packet.can_place_ball();
 }
 
-
 QString TeamInfo::getName() const
 {
 	return name;
@@ -46,7 +45,6 @@ quint32 TeamInfo::getScore() const
 {
 	return score;
 }
-
 
 quint32 TeamInfo::getRedCards() const
 {
