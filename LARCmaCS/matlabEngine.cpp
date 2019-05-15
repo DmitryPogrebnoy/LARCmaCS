@@ -68,14 +68,26 @@ QSharedPointer<PacketSSL> MatlabEngine::loadVisionData()
 {
 	QSharedPointer<PacketSSL> packetSSL(new PacketSSL());
 
-	packetSSL->balls[0] = 0;
+	QSharedPointer<SSL_WrapperPacket> geometryPacket = mSharedRes->getGeometry();
+	if (!geometryPacket || !geometryPacket->IsInitialized()) {
+		if (geometryPacket) {
+			qDebug() << "Packet is uninitialized!";
+		}
+	} else {
+		if (geometryPacket->has_geometry()) {
+			packetSSL->fieldInfo[0] = geometryPacket->geometry().field().field_length();
+			packetSSL->fieldInfo[1] = geometryPacket->geometry().field().field_width();
+		}
+	}
+
 
 	int balls_n, idCam, robots_blue_n, robots_yellow_n;
 	for (int i = 0; i < mSharedRes->getDetectionSize(); i++) {
 		QSharedPointer<SSL_WrapperPacket> packet = mSharedRes->getDetection(i);
 		if (!packet || !packet->IsInitialized()) {
-			if (packet)
+			if (packet) {
 				qDebug() << "Packet is uninitialized!";
+			}
 			continue;
 		}
 
@@ -143,12 +155,14 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 	memcpy(mxGetPr(mMatlabData.Ball), packetssl->balls, Constants::ballAlgoPacketSize * sizeof(double));
 	memcpy(mxGetPr(mMatlabData.Blue), packetssl->robots_blue, Constants::robotAlgoPacketSize * sizeof(double));
 	memcpy(mxGetPr(mMatlabData.Yellow), packetssl->robots_yellow, Constants::robotAlgoPacketSize * sizeof(double));
+	memcpy(mxGetPr(mMatlabData.fieldInfo), &packetssl->fieldInfo, Constants::fieldInfoSize * sizeof(double));
 	//memcpy(mxGetPr(mMatlabData.ballInside), &mIsBallInside, sizeof(double));
 
 
 	engPutVariable(mMatlabData.ep, "Balls", mMatlabData.Ball);
 	engPutVariable(mMatlabData.ep, "Blues", mMatlabData.Blue);
 	engPutVariable(mMatlabData.ep, "Yellows", mMatlabData.Yellow);
+	engPutVariable(mMatlabData.ep, "FieldInfo", mMatlabData.fieldInfo);
 	//engPutVariable(mMatlabData.ep, "ballInside", mMatlabData.ballInside);
 	evalString(mMatlabData.config.file_of_matlab);
 

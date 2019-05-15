@@ -33,4 +33,5 @@ public:
 	mxArray *Back_Amount;
 	mxArray *Back_Length;
 	mxArray *ballInside;
+	mxArray *fieldInfo;
 };

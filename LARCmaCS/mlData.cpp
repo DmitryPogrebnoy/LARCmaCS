@@ -14,6 +14,7 @@ MlData::MlData(RCConfig conf)
 	Back_Amount  = mxCreateDoubleMatrix(1, 1, mxREAL);
 	Back_Length  = mxCreateDoubleMatrix(1, 1, mxREAL);
 	ballInside   = mxCreateDoubleMatrix(Constants::maxRobotsInTeam, 1, mxREAL);
+	fieldInfo    = mxCreateDoubleMatrix(1, Constants::fieldInfoSize, mxREAL);
 }
 
 MlData::MlData(const MlData &dat)
@@ -44,4 +45,7 @@ MlData::MlData(const MlData &dat)
 
 	ballInside   = mxCreateDoubleMatrix(Constants::maxRobotsInTeam, 1, mxREAL);
 	memcpy(ballInside, &dat.ballInside, sizeof(ballInside));
+
+	fieldInfo    = mxCreateDoubleMatrix(1, Constants::fieldInfoSize, mxREAL);
+	memcpy(fieldInfo, &dat.fieldInfo, sizeof(fieldInfo));
 }
