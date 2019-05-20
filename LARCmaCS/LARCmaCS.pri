@@ -36,9 +36,12 @@ INCLUDEPATH += \
     $$PWD \
 
 SOURCES +=  \
+        $$PWD/constants.cpp \
+        $$PWD/engineInterface.cpp \
 	$$PWD/main.cpp \
 	$$PWD/larcmacs.cpp \
 	$$PWD/fieldScene.cpp \
+        $$PWD/pythonEngine.cpp \
 	$$PWD/sceneView.cpp \
 	$$PWD/receiver.cpp \
 	$$PWD/mainAlg.cpp \
@@ -61,6 +64,23 @@ SOURCES +=  \
         $$PWD/matlabEngine.cpp
 
 HEADERS  += \
+    $$PWD/Exception/baseException/baseException.h \
+    $$PWD/Exception/pythonException/attrNotFoundException.h \
+    $$PWD/Exception/pythonException/callMethodException.h \
+    $$PWD/Exception/pythonException/couldNotCastToDouble.h \
+    $$PWD/Exception/pythonException/couldNotSetItemTupleException.h \
+    $$PWD/Exception/pythonException/createTupleException.h \
+    $$PWD/Exception/pythonException/decodeException.h \
+    $$PWD/Exception/pythonException/encodeStreamException.h \
+    $$PWD/Exception/pythonException/notArrayReturnValueElementException.h \
+    $$PWD/Exception/pythonException/notArrayReturnValueException.h \
+    $$PWD/Exception/pythonException/notBoolReturnValueException.h \
+    $$PWD/Exception/pythonException/objectNotFoundException.h \
+    $$PWD/Exception/pythonException/pythonException.h \
+    $$PWD/Exception/pythonException/wrongSizeArrayReturnValueElementException.h \
+    $$PWD/Exception/pythonException/wrongSizeArrayReturnValueException.h \
+        $$PWD/pythonEngine.h \
+        $$PWD/pythonScopedPointerDeleter.h \
 	$${SHARED_DIR}/util/timer.h \
 	$${SHARED_DIR}/util/field_default_constants.h \
 	$$PWD/larcmacs.h \

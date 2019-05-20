@@ -32,7 +32,6 @@ public:
 private:
 	void runMatlab();
 	void evalString(const QString & str);
-	QSharedPointer<PacketSSL> loadVisionData();
 	void processPacket(const QSharedPointer<PacketSSL> & packetssl);
 	void updatePauseState();
 

@@ -33,11 +33,12 @@ public slots:
 	void receiveMSGToConsole(const QString & str);
 	void stop();
 	void pauseUnpause();
-
+	void switchEngine();
 
 private:
-	EngineInterface * mEngine;
-	int mFrequency = 100;
+	EngineInterface * mMainEngine;
+	EngineInterface * mSecondaryEngine;
+	int mFrequency = 1000;
 	bool mShutdownFlag;
 	int mTotalPacketsNum = 0;
 	int mPacketsPerSecond = 0;

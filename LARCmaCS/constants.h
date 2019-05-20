@@ -14,6 +14,8 @@
 
 #pragma once
 
+#include <QString>
+
 class Constants
 {
 public:
@@ -27,4 +29,9 @@ public:
 	static const int ruleLength = 7;
 	static const int ruleAmount = 12;
 	static const int matlabOutputBufferSize = 2048;
+	static const QString pythonNameMainScript;
+	static const QString pythonNameMainMethod;
+	static const QString pythonNamePauseScript;
+	static const QString pythonNamePauseMethod;
+	static const int pythonRuleLength = 6;
 };

@@ -66,6 +66,8 @@ private slots:
 	void on_pushButton_RemoteControl_clicked();
 	void on_matlabOutputFrequencyLineEdit_textEdited(const QString & text);
 	void on_but_reference_clicked();
+	void on_pythonEngine_toggled(bool checked);
+	void on_matlabEngine_toggled(bool checked);
 
 signals:
 	void updateDebugFrequency(int frequency);
@@ -74,4 +76,5 @@ signals:
 	void setDirectory(const QString & s);
 	void updateRobots();
 	void connectorChanged(bool isSim, const QString & ip, int port);
+	void switchEngine();
 };

@@ -33,6 +33,7 @@ MainAlg::MainAlg(SharedRes * sharedRes)
 
 	connect(this, SIGNAL(stopped()), mWorker, SLOT(stop()));
 
+	connect(this, SIGNAL(switchEngine()), mWorker, SLOT(switchEngine()));
 	mThread.start();
 }
 

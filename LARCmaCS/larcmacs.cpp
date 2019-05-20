@@ -37,8 +37,9 @@ LARCmaCS::LARCmaCS(QWidget *parent)
 	connect(this, SIGNAL(updateDebugFrequency(int)), &mainalg, SIGNAL(updateDebugFrequency(int)));
 	connect(this, SIGNAL(pauseUnpause()), &mainalg, SIGNAL(pauseUnpause()));
 
-	connect(ui->matlabConsole, SIGNAL(customContextMenuRequested(const QPoint &)),
+	connect(ui->engineConsole, SIGNAL(customContextMenuRequested(const QPoint &)),
 			this, SLOT(matlabConsoleMenuRequested(const QPoint &)));
+	connect(this, SIGNAL(switchEngine()), &mainalg, SIGNAL(switchEngine()));
 
 	//gui connector
 	connect(&sceneview.worker, SIGNAL(updateView()), this, SLOT(updateView()));
@@ -161,7 +162,7 @@ void LARCmaCS::updateChargeLevel(const QVector<int> &chargeLevel)
 
 void LARCmaCS::toConsole(const QString & str)
 {
-	ui->matlabConsole->appendPlainText(str);
+	ui->engineConsole->appendPlainText(str);
 }
 
 void LARCmaCS::updateView()
@@ -191,9 +192,9 @@ void LARCmaCS::matlabConsoleMenuRequested(const QPoint & point)
 {
 	QMenu * menu = new QMenu(this);
 	QAction * editDevice = new QAction(trUtf8("Clear console"), this);
-	connect(editDevice, SIGNAL(triggered()), ui->matlabConsole, SLOT(clear()));
+	connect(editDevice, SIGNAL(triggered()), ui->engineConsole, SLOT(clear()));
 	menu->addAction(editDevice);
-	menu->popup(ui->matlabConsole->viewport()->mapToGlobal(point));
+	menu->popup(ui->engineConsole->viewport()->mapToGlobal(point));
 }
 
 void LARCmaCS::on_matlabOutputFrequencyLineEdit_textEdited(const QString & text)
@@ -227,4 +228,18 @@ void LARCmaCS::on_but_reference_clicked()
 {
 	Reference * refWindow = new Reference();
 	refWindow->show();
+}
+
+void LARCmaCS::on_pythonEngine_toggled(bool checked)
+{
+	if (checked) {
+		emit switchEngine();
+	}
+}
+
+void LARCmaCS::on_matlabEngine_toggled(bool checked)
+{
+	if (checked) {
+		emit switchEngine();
+	}
 }

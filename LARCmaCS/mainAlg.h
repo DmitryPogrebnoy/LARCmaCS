@@ -46,6 +46,7 @@ signals:
 	void newData(const QVector<Rule> & data);
 	void pause(bool status);
 	void stopped();
+	void switchEngine();
 
 private:
 	SSL_DetectionFrame mDetection;

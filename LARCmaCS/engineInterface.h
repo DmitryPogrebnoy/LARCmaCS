@@ -2,6 +2,7 @@
 
 #include <QObject>
 
+#include "packetSSL.h"
 #include "sharedRes.h"
 
 typedef struct Rule
@@ -42,6 +43,8 @@ public:
 
 protected:
 	SharedRes * mSharedRes;
+	/// Get robots and ball position
+	QSharedPointer<PacketSSL> loadVisionData();
 
 signals:
 

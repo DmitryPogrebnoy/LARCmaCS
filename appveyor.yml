@@ -11,6 +11,11 @@ environment:
       bit: 32
       MATLAB_VER: R2013b
       MATLAB_SHORT_VER: 82
+      PYTHON: C:\Python37
+      PYTHONLIB: C:\Python37\libs
+      PYTHONINCLUDE: C:\Python37\include
+      NUMPYLIB: C:\Python37\Lib\site-packages\numpy\core\lib
+      NUMPYINCLUDE: C:\Python37\Lib\site-packages\numpy\core\include\numpy
       QT_DIR: C:\Qt\5.11.3\mingw53_32
       mingw_ver: mingw530_32
     - platform: x64
@@ -18,6 +23,11 @@ environment:
       bit: 64      
       MATLAB_VER: R2018b
       MATLAB_SHORT_VER: 95
+      PYTHON: C:\Python37-x64
+      PYTHONLIB: C:\Python37-x64\libs
+      PYTHONINCLUDE: C:\Python37-x64\include
+      NUMPYLIB: C:\Python37-x64\Lib\site-packages\numpy\core\lib
+      NUMPYINCLUDE: C:\Python37-x64\Lib\site-packages\numpy\core\include\numpy
       QT_DIR: C:\Qt\5.12.1\mingw73_64
       mingw_ver: mingw730_64
 
@@ -31,6 +41,9 @@ init:
   - pacman --noconfirm -Su unzip
 install:
   - set matlab_ref="http://ssd.mathworks.com/supportfiles/downloads/%MATLAB_VER%/deployment_files/%MATLAB_VER%/installers/win%bit%/MCR_%MATLAB_VER%_win%bit%_installer.exe"
+  - cd %PYTHON%
+  - python -m pip install --upgrade pip
+  - python -m pip install numpy
   - cd %APPVEYOR_BUILD_FOLDER%
   - echo %matlab_ref%
   - install_mcr.sh %matlab_ref%

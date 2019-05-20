@@ -54,3 +54,16 @@ msvc: OTHER_BIN = '$$[QT_INSTALL_BINS];$${PROTO_DIR}/$${PREFIX_STR}bin/'
 mingw: OTHER_BIN = '$${MSYS_DIR}\mingw$${BIT}\bin'
 QMAKE_SUBSTITUTES += LARCmaCS.cmd.in
 OTHER_FILES += $$QMAKE_SUBSTITUTES
+win32:CONFIG(release, debug|release): LIBS += -L$$(PYTHONLIB)/ -lpython37
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$(PYTHONLIB)/ -lpython37
+else:unix: LIBS += -L$$(PYTHONLIB)/ -lpython3.7m
+
+INCLUDEPATH += $$(PYTHONINCLUDE)
+DEPENDPATH += $$(PYTHONINCLUDE)
+
+win32:CONFIG(release, debug|release): LIBS += -L$$(NUMPYLIB)/ -lnpymath
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$(NUMPYLIB)/ -lnpymath
+else:unix:!macx: LIBS += -L$$(NUMPYLIB)/ -lnpymath
+
+INCLUDEPATH += $$(NUMPYINCLUDE)
+DEPENDPATH += $$(NUMPYINCLUDE)
