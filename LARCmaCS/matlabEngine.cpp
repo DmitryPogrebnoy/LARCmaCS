@@ -152,11 +152,23 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 	}
 // Заполнение массивов Balls Blues и Yellows и запуск main-функции
 
+	bool isCurrentTeamBlue = true;
+
+	QVector<bool> barrierState = mSharedRes->getBarrierState();
+	if (isCurrentTeamBlue) {
+		for (int i = 0; i < Constants::maxRobotsInTeam; i++) {
+			packetssl->robots_blue[i + Constants::maxRobotsInTeam * 4] = barrierState[i];
+		}
+	} else {
+		for (int i = 0; i < Constants::maxRobotsInTeam; i++) {
+			packetssl->robots_yellow[i + Constants::maxRobotsInTeam * 4] = barrierState[i];
+		}
+	}
+
 	memcpy(mxGetPr(mMatlabData.Ball), packetssl->balls, Constants::ballAlgoPacketSize * sizeof(double));
 	memcpy(mxGetPr(mMatlabData.Blue), packetssl->robots_blue, Constants::robotAlgoPacketSize * sizeof(double));
 	memcpy(mxGetPr(mMatlabData.Yellow), packetssl->robots_yellow, Constants::robotAlgoPacketSize * sizeof(double));
 	memcpy(mxGetPr(mMatlabData.fieldInfo), packetssl->fieldInfo, Constants::fieldInfoSize * sizeof(double));
-	//memcpy(mxGetPr(mMatlabData.ballInside), &mIsBallInside, sizeof(double));
 
 	double state = mSharedRes->getRefereeState();
 	memcpy(mxGetPr(mMatlabData.state), &state, sizeof(double));
@@ -171,10 +183,9 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 	engPutVariable(mMatlabData.ep, "Blues", mMatlabData.Blue);
 	engPutVariable(mMatlabData.ep, "Yellows", mMatlabData.Yellow);
 	engPutVariable(mMatlabData.ep, "FieldInfo", mMatlabData.fieldInfo);
-	//engPutVariable(mMatlabData.ep, "ballInside", mMatlabData.ballInside);
-	engPutVariable(mMatlabData.ep, "state", mMatlabData.state);
-	engPutVariable(mMatlabData.ep, "commandForTeam", mMatlabData.team);
-	engPutVariable(mMatlabData.ep, "partOfFieldLeft", mMatlabData.partOfFieldLeft);
+	engPutVariable(mMatlabData.ep, "RefState", mMatlabData.state);
+	engPutVariable(mMatlabData.ep, "RefCommandForTeam", mMatlabData.team);
+	engPutVariable(mMatlabData.ep, "RefPartOfFieldLeft", mMatlabData.partOfFieldLeft);
 	evalString(mMatlabData.config.file_of_matlab);
 
 // Забираем Rules и очищаем его в воркспейсе

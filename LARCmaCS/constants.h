@@ -19,7 +19,7 @@ class Constants
 public:
 	static const int maxNumOfRobots = 16;
 	static const int maxRobotsInTeam = maxNumOfRobots; //maxNumOfRobots / 2;
-	static const int robotAlgoPacketSize = 4 * maxRobotsInTeam;
+	static const int robotAlgoPacketSize = 5 * maxRobotsInTeam;
 	static const int ballAlgoPacketSize = 3;
 	static const int fieldInfoSize = 2;
 	static const unsigned  SSLVisionPort = 10006;

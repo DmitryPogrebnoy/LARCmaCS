@@ -23,6 +23,7 @@ SharedRes::SharedRes()
 	for (auto i = 0; i < Constants::numOfCameras; i++) {
 		mDetection->replace(i, QSharedPointer<SSL_WrapperPacket>());
 	}
+	mBarrierState.resize(Constants::maxRobotsInTeam);
 }
 
 QVector<bool> SharedRes::getBarrierState()
@@ -75,7 +76,7 @@ int SharedRes::getDetectionSize()
 	return mDetection->size();
 }
 
-void SharedRes::setBarrierState(const QVector<bool> &barrierState)
+void SharedRes::setBarrierState(const QVector<bool> & barrierState)
 {
 	QWriteLocker locker(&mBarrierStateLock);
 	mBarrierState = barrierState;
