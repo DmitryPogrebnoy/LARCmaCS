@@ -57,7 +57,7 @@ MlData::MlData(const MlData &dat)
 
 	partOfFieldLeft = mxCreateDoubleScalar(0);
 	memcpy(partOfFieldLeft, &dat.partOfFieldLeft, sizeof(partOfFieldLeft));
-  
+	
 	fieldInfo    = mxCreateDoubleMatrix(1, Constants::fieldInfoSize, mxREAL);
 	memcpy(fieldInfo, &dat.fieldInfo, sizeof(fieldInfo));
 }
