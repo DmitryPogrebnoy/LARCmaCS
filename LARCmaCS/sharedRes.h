@@ -42,7 +42,7 @@ public:
 	QSharedPointer<SSL_WrapperPacket> getDetection(int camID);
 	int getRefereeState();
 	int getRefereeTeam();
-	bool getRefereePartOfFildLeft();
+	bool getRefereePartOfFieldLeft();
 
 private:
 	QReadWriteLock mDetectionLock;
@@ -54,7 +54,8 @@ private:
 	QReadWriteLock mBarrierStateLock;
 	QVector<bool> mBarrierState;
 
-	int mRefereeState;
-	int mRefereeTeam;
-	bool mRefereePartOfFieldLeft;
+	QReadWriteLock mRefereeLock;
+	int mRefereeState = 0;
+	int mRefereeTeam = 0;
+	bool mRefereePartOfFieldLeft = false;
 };

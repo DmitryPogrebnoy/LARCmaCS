@@ -164,8 +164,8 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 	double team = mSharedRes->getRefereeTeam();
 	memcpy(mxGetPr(mMatlabData.team), &team, sizeof(double));
 
-	double partOfFied = mSharedRes->getRefereePartOfFildLeft();
-	memcpy(mxGetPr(mMatlabData.partOfFieldLeft), &partOfFied, sizeof(double));
+	double partOfField = (double)mSharedRes->getRefereePartOfFieldLeft();
+	memcpy(mxGetPr(mMatlabData.partOfFieldLeft), &partOfField, sizeof(double));
 
 	engPutVariable(mMatlabData.ep, "Balls", mMatlabData.Ball);
 	engPutVariable(mMatlabData.ep, "Blues", mMatlabData.Blue);
