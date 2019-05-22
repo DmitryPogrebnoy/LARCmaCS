@@ -36,4 +36,5 @@ public:
 	mxArray *state;
 	mxArray *team;
 	mxArray *partOfFieldLeft;
+	mxArray *fieldInfo;
 };

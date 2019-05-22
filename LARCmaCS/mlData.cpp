@@ -17,6 +17,7 @@ MlData::MlData(RCConfig conf)
 	state        = mxCreateDoubleScalar(0);
 	team         = mxCreateDoubleScalar(0);
 	partOfFieldLeft = mxCreateDoubleScalar(0);
+	fieldInfo    = mxCreateDoubleMatrix(1, Constants::fieldInfoSize, mxREAL);
 }
 
 MlData::MlData(const MlData &dat)
@@ -33,7 +34,7 @@ MlData::MlData(const MlData &dat)
 	Yellow       = mxCreateDoubleMatrix(Constants::maxRobotsInTeam, 4, mxREAL);
 	memcpy(Yellow, &dat.Yellow, sizeof(Yellow));
 
-	Rule         = mxCreateDoubleMatrix(config.RULE_LENGTH, config.RULE_AMOUNT, mxREAL);
+	Rule         = mxCreateDoubleMatrix(Constants::ruleLength, Constants::ruleAmount, mxREAL);
 	memcpy(Rule, &dat.Rule, sizeof(Rule));
 
 	Back_Params  = mxCreateDoubleMatrix(config.BACK_LENGTH, config.BACK_AMOUNT, mxREAL);
@@ -56,4 +57,7 @@ MlData::MlData(const MlData &dat)
 
 	partOfFieldLeft = mxCreateDoubleScalar(0);
 	memcpy(partOfFieldLeft, &dat.partOfFieldLeft, sizeof(partOfFieldLeft));
+  
+	fieldInfo    = mxCreateDoubleMatrix(1, Constants::fieldInfoSize, mxREAL);
+	memcpy(fieldInfo, &dat.fieldInfo, sizeof(fieldInfo));
 }

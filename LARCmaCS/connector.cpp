@@ -60,7 +60,8 @@ void Connector::sendNewCommand(const QVector<Rule> & rule)
 			if (!mIsPause) {
 				DefaultRobot::formControlPacket(command, k, rule[k].mSpeedX, rule[k].mSpeedY, rule[k].mSpeedR,
 						rule[k].mKickUp, rule[k].mKickForward, rule[k].mKickerVoltageLevel,
-												rule[k].mDribblerEnable, rule[k].mSpeedDribbler);
+												rule[k].mDribblerEnable, rule[k].mSpeedDribbler, rule[k].mAutoKick,
+												rule[k].mKickerChargeEnable, rule[k].mBeep);
 			} else {
 				DefaultRobot::formControlPacket(command, k, 0, 0, 0, 0, 0, 0, 0);
 			}
@@ -68,25 +69,12 @@ void Connector::sendNewCommand(const QVector<Rule> & rule)
 			if (!mIsPause) {
 				GrSimRobot::formControlPacket(command, k, rule[k].mSpeedX, rule[k].mSpeedY, rule[k].mSpeedR,
 											  rule[k].mKickUp, rule[k].mKickForward, rule[k].mKickerVoltageLevel,
-											  rule[k].mDribblerEnable, rule[k].mSpeedDribbler);
+											  rule[k].mDribblerEnable, rule[k].mSpeedDribbler, rule[k].mAutoKick,
+											  rule[k].mKickerChargeEnable, rule[k].mBeep);
 			} else {
 				GrSimRobot::formControlPacket(command, k, 0, 0, 0, 0, 0, 0, 0);
 			}
 		}
-
-		//TODO: sending to all should be implemented in future
-//		if (newmess[1] == 0) {
-//			for (int i = 1; i <= Constants::maxNumOfRobots; i++) {
-//				if (!simFlag) {
-//					emit run(i, command);
-//				} else {
-//					QByteArray multiCommand;
-//					GrSimRobot::formControlPacket(multiCommand, i, newmess[3], newmess[2], newmess[5],
-//							newmess[6], newmess[4], voltage, 0);
-//					emit runSim(multiCommand);
-//				}
-//			}
-//		}
 
 		if (!simFlag) {
 			emit run(k, command);
@@ -101,7 +89,7 @@ void Connector::onPauseChanged(bool status)
 	qDebug() << "onPauseChanged" << status;
 	mIsPause = status;
 
-	if (mIsPause) { //TODO: add check of remote control
+	if (mIsPause) {
 		QByteArray command;
 		if (!mIsSim) {
 			for (int i = 1; i <= Constants::maxNumOfRobots; i++) {
@@ -111,7 +99,7 @@ void Connector::onPauseChanged(bool status)
 		} else {
 			for (int i = 0; i <= Constants::maxRobotsInTeam; i++) {
 				GrSimRobot::formControlPacket(command, i, 0, 0, 0, 0, 0, 0, 0);
-				runSim(command); //for more power of remote control
+				runSim(command);
 			}
 		}
 	}
