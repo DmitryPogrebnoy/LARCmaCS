@@ -34,10 +34,15 @@ public:
 	void setBarrierState(const QVector<bool> & barrierState);
 	void setDetection(const QSharedPointer<SSL_WrapperPacket> & detection, int camID);
 	void setGeometry(const QSharedPointer<SSL_WrapperPacket> & geometry);
+	void setRefereeData(int state, int team, bool partOfField);
 	QVector<bool> getBarrierState();
+
 	QSharedPointer<QVector<QSharedPointer<SSL_WrapperPacket> > > getDetection();
 	QSharedPointer<SSL_WrapperPacket> getGeometry();
 	QSharedPointer<SSL_WrapperPacket> getDetection(int camID);
+	int getRefereeState();
+	int getRefereeTeam();
+	bool getRefereePartOfFildLeft();
 
 private:
 	QReadWriteLock mDetectionLock;
@@ -48,4 +53,8 @@ private:
 
 	QReadWriteLock mBarrierStateLock;
 	QVector<bool> mBarrierState;
+
+	int mRefereeState;
+	int mRefereeTeam;
+	bool mRefereePartOfFieldLeft;
 };

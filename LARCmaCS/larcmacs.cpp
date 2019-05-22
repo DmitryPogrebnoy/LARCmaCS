@@ -22,6 +22,7 @@ LARCmaCS::LARCmaCS(QWidget *parent)
 	, mainalg(&sharedRes)
 	, connector(&sharedRes)
 	, mIsSim(false)
+	, referee(&sharedRes)
 {
 	qRegisterMetaType<QVector<Rule> >("QVector<Rule>");
 

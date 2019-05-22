@@ -24,6 +24,7 @@ public:
 	static const int fieldInfoSize = 2;
 	static const unsigned  SSLVisionPort = 10006;
 	static const unsigned  SimVisionPort = 10020;
+	static const unsigned  refereePort = 10003;
 	static const int numOfCameras = 4;
 	static const int ruleLength = 13;
 	static const int ruleAmount = 12;
