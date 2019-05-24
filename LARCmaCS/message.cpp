@@ -84,8 +84,8 @@ QByteArray Message::generateByteArray()
 	ds << opcode;
 	ds << (quint8)mRobotNumber;
 
-	ds << (qint8)mSpeedX;
 	ds << (qint8)mSpeedY;
+	ds << (qint8)mSpeedX;
 	ds << (qint8)mSpeedR;
 
 	ds << (quint8)mSpeedDribbler;

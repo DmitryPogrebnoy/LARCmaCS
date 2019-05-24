@@ -208,8 +208,8 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 
 	for (int i = 0; i < Constants::ruleAmount; i++) {
 		if (ruleArray[i] == 1) {
-			rule[i].mSpeedX = ruleArray[3 * Constants::ruleAmount + i];
-			rule[i].mSpeedY = ruleArray[2 * Constants::ruleAmount + i];
+			rule[i].mSpeedX = ruleArray[2 * Constants::ruleAmount + i];
+			rule[i].mSpeedY = ruleArray[3 * Constants::ruleAmount + i];
 			rule[i].mSpeedR = ruleArray[5 * Constants::ruleAmount + i];
 			rule[i].mKickUp = ruleArray[6 * Constants::ruleAmount + i];
 			rule[i].mKickForward = ruleArray[4 * Constants::ruleAmount + i];
