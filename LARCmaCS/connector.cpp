@@ -53,33 +53,35 @@ void Connector::onConnectorChange(bool isSim, const QString &ip, int port)
 
 void Connector::sendNewCommand(const QVector<Rule> & rule)
 {
-	for (int k = 0; k < rule.size(); k++) {
-		QByteArray command;
-		bool simFlag = mIsSim;
-		if (!simFlag) {
-			if (!mIsPause) {
-				DefaultRobot::formControlPacket(command, k, rule[k].mSpeedX, rule[k].mSpeedY, rule[k].mSpeedR,
-						rule[k].mKickUp, rule[k].mKickForward, rule[k].mKickerVoltageLevel,
-												rule[k].mDribblerEnable, rule[k].mSpeedDribbler, rule[k].mAutoKick,
-												rule[k].mKickerChargeEnable, rule[k].mBeep);
+	if (!mIsPause) {
+		for (int k = 0; k < rule.size(); k++) {
+			QByteArray command;
+			bool simFlag = mIsSim;
+			if (!simFlag) {
+				if (!mIsPause) {
+					DefaultRobot::formControlPacket(command, k, rule[k].mSpeedX, rule[k].mSpeedY, rule[k].mSpeedR,
+							rule[k].mKickUp, rule[k].mKickForward, rule[k].mKickerVoltageLevel,
+													rule[k].mDribblerEnable, rule[k].mSpeedDribbler, rule[k].mAutoKick,
+													rule[k].mKickerChargeEnable, rule[k].mBeep);
+				} else {
+					DefaultRobot::formControlPacket(command, k, 0, 0, 0, 0, 0, 0, 0);
+				}
 			} else {
-				DefaultRobot::formControlPacket(command, k, 0, 0, 0, 0, 0, 0, 0);
+				if (!mIsPause) {
+					GrSimRobot::formControlPacket(command, k, rule[k].mSpeedX, rule[k].mSpeedY, rule[k].mSpeedR,
+												  rule[k].mKickUp, rule[k].mKickForward, rule[k].mKickerVoltageLevel,
+												  rule[k].mDribblerEnable, rule[k].mSpeedDribbler, rule[k].mAutoKick,
+												  rule[k].mKickerChargeEnable, rule[k].mBeep);
+				} else {
+					GrSimRobot::formControlPacket(command, k, 0, 0, 0, 0, 0, 0, 0);
+				}
 			}
-		} else {
-			if (!mIsPause) {
-				GrSimRobot::formControlPacket(command, k, rule[k].mSpeedX, rule[k].mSpeedY, rule[k].mSpeedR,
-											  rule[k].mKickUp, rule[k].mKickForward, rule[k].mKickerVoltageLevel,
-											  rule[k].mDribblerEnable, rule[k].mSpeedDribbler, rule[k].mAutoKick,
-											  rule[k].mKickerChargeEnable, rule[k].mBeep);
-			} else {
-				GrSimRobot::formControlPacket(command, k, 0, 0, 0, 0, 0, 0, 0);
-			}
-		}
 
-		if (!simFlag) {
-			emit run(k, command);
-		} else {
-			emit runSim(command);
+			if (!simFlag) {
+				emit run(k, command);
+			} else {
+				emit runSim(command);
+			}
 		}
 	}
 }
