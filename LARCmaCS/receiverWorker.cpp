@@ -36,7 +36,7 @@ ReceiverWorker::ReceiverWorker()
 	mCameraCheckTimer.setInterval(1000);
 
 	connect(&mStatisticsTimer, SIGNAL(timeout()), this, SLOT(formStatistics()));
-	connect(&mStatisticsTimer, SIGNAL(timeout()), this, SLOT(updateCameraStatus()));
+	connect(&mCameraCheckTimer, SIGNAL(timeout()), this, SLOT(updateCameraStatus()));
 	connect(&mSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 }
 
