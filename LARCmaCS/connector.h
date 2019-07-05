@@ -23,12 +23,11 @@ public:
 	unsigned short getGrSimPort();
 	unsigned short getRobotPort();
 
-public slots:
+private slots:
 	void onConnectorChange(bool isSim, const QString & ip, int port);
 	void sendNewCommand(const QVector<Rule> & rule);
 	void onPauseChanged(bool status);
 	void run(int N, const QByteArray & command);
-	void runSim(const QByteArray & command);
 
 private:
 	QString mGrSimIP;

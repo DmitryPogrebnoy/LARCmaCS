@@ -77,5 +77,4 @@ signals:
 	void updateRobots();
 	void connectorChanged(bool isSim, const QString & ip, int port);
 	void run(int N, const QByteArray & command);
-	void runSim(const QByteArray & command);
 };

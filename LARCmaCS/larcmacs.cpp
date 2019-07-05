@@ -56,7 +56,6 @@ LARCmaCS::LARCmaCS(QWidget *parent)
 	connect(&remotecontol, SIGNAL(RC_control(int, int, int, int, bool)),
 			this, SLOT(remcontrolsender(int, int, int, int, bool)));
 	connect(this, SIGNAL(run(int, const QByteArray &)), &connector, SLOT(run(int, const QByteArray &)));
-	connect(this, SIGNAL(runSim(const QByteArray &)), &connector, SLOT(runSim(const QByteArray &)));
 
 	//simulator Enable
 	connect(this, SIGNAL(connectorChanged(bool, const QString &, int))
@@ -95,21 +94,7 @@ void LARCmaCS::remcontrolsender(int l, int r,int k, int b, bool kickUp)
 		GrSimRobot::formControlPacket(byteData, numOfRobot, l, r, k, kickUp, 0, 4, 0);
 	}
 
-	unsigned short port;
-	QString IP;
-	if (!mIsSim) {
-		IP = ip;
-		port = connector.getRobotPort();
-	} else {
-		IP = connector.getGrSimIP();
-		port = connector.getGrSimPort();
-	}
-
-	if (!mIsSim) {
-		emit run(k, byteData);
-	} else {
-		emit runSim(byteData);
-	}
+	emit run(k, byteData);
 }
 
 LARCmaCS::~LARCmaCS()
