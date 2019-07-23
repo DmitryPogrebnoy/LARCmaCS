@@ -22,6 +22,7 @@ LARCmaCS::LARCmaCS(QWidget *parent)
 	, mainalg(&sharedRes)
 	, connector(&sharedRes)
 	, mIsSim(false)
+	, referee(&sharedRes)
 {
 	qRegisterMetaType<QVector<Rule> >("QVector<Rule>");
 
@@ -54,6 +55,7 @@ LARCmaCS::LARCmaCS(QWidget *parent)
 	//remotecontrol
 	connect(&remotecontol, SIGNAL(RC_control(int, int, int, int, bool)),
 			this, SLOT(remcontrolsender(int, int, int, int, bool)));
+	connect(this, SIGNAL(run(int, const QByteArray &)), &connector, SLOT(run(int, const QByteArray &)));
 
 	//simulator Enable
 	connect(this, SIGNAL(connectorChanged(bool, const QString &, int))
@@ -86,30 +88,13 @@ void LARCmaCS::remcontrolsender(int l, int r,int k, int b, bool kickUp)
 	QString ip = ui->lineEditRobotIp->text();
 	QByteArray byteData;
 	if (!mIsSim) {
-		DefaultRobot::formControlPacket(byteData, 0, r, l, k, kickUp, 0, 4, 0);
+		DefaultRobot::formControlPacket(byteData, 0, l, r, k, kickUp, 0, 4, 0);
 	} else {
 		int numOfRobot = ip.toInt();
-		GrSimRobot::formControlPacket(byteData, numOfRobot, r, l, k, kickUp, 0, 4, 0);
+		GrSimRobot::formControlPacket(byteData, numOfRobot, l, r, k, kickUp, 0, 4, 0);
 	}
 
-	unsigned short port;
-	QString IP;
-	if (!mIsSim) {
-		IP = ip;
-		port = connector.getRobotPort();
-	} else {
-		IP = connector.getGrSimIP();
-		port = connector.getGrSimPort();
-	}
-
-	if(socket.ConnectedState == QUdpSocket::ConnectedState) {
-		socket.writeDatagram(byteData, byteData.length(), QHostAddress(IP), port);
-	} else {
-		socket.connectToHost(IP, port);
-		if (socket.ConnectedState == QUdpSocket::ConnectedState) {
-			socket.writeDatagram(byteData, byteData.length(), QHostAddress(IP), port);
-		}
-	}
+	emit run(k, byteData);
 }
 
 LARCmaCS::~LARCmaCS()
