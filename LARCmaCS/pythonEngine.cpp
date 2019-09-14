@@ -43,7 +43,7 @@ PythonEngine::PythonEngine(SharedRes * sharedRes)
 
 	Py_Initialize();
 
-	QScopedPointer<wchar_t,ScopedPointerPy_DecodeLocaleDeleter>
+	QScopedPointer<wchar_t, ScopedPointerPy_DecodeLocaleDeleter>
 			py_argv((Py_DecodeLocale("Python algorithm", nullptr)));
 	wchar_t* set_argv = py_argv.data();
 	PySys_SetArgv(1, &set_argv);
@@ -66,7 +66,7 @@ void PythonEngine::evaluate(){
 
 	cleanOutputError();
 
-	const QSharedPointer<PacketSSL> & packetSSL = loadVisionData();
+	const QSharedPointer<PacketSSL> packetSSL = loadVisionData();
 
 	//Evaluate control signals in Python script
 	try{
@@ -112,13 +112,13 @@ void PythonEngine::evaluate(){
 
 
 		if (PyTuple_SetItem(py_Args.data(), 0, py_List_Ball) != 0){
-			throw CouldNotSetItemTupleException(QString("py_Args"),0,QString("py_List_Ball"));
+			throw CouldNotSetItemTupleException(QString("py_Args"), 0, QString("py_List_Ball"));
 		}
 		if (PyTuple_SetItem(py_Args.data(), 1, py_List_TeamBlue) != 0){
-			throw CouldNotSetItemTupleException(QString("py_Args"),1,QString("py_List_TeamBlue"));
+			throw CouldNotSetItemTupleException(QString("py_Args"), 1, QString("py_List_TeamBlue"));
 		}
 		if (PyTuple_SetItem(py_Args.data(), 2, py_List_TeamYellow) != 0){
-			throw CouldNotSetItemTupleException(QString("py_Args"),2,QString("py_List_TeamYellow"));
+			throw CouldNotSetItemTupleException(QString("py_Args"), 2, QString("py_List_TeamYellow"));
 		}
 
 
@@ -136,7 +136,7 @@ void PythonEngine::evaluate(){
 
 		if ((countReturnedRule == 0) || (countReturnedRule > Constants::ruleAmount)){
 			throw WrongSizeArrayReturnValueException(Constants::ruleAmount,
-													 static_cast<const int>(PyList_Size(py_Value.data())));
+				static_cast<const int>(PyList_Size(py_Value.data())));
 		}
 
 		for (int i = 0; i < countReturnedRule; i++){
@@ -201,9 +201,9 @@ void PythonEngine::evaluate(){
 		checkPauseState();
 
 		for (int i = 0; i < countReturnedRule; i++){
-			delete [] controlSignals[i];
+			delete[] controlSignals[i];
 		}
-		delete [] controlSignals;
+		delete[] controlSignals;
 
 	} catch (pythonException& e) {
 		emit consoleMessage(e.message());

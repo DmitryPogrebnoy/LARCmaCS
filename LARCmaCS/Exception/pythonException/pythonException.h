@@ -5,6 +5,5 @@
 class pythonException : public Exception
 {
 public:
-	explicit pythonException(const QString &str) : Exception(str)
-	{}
+	explicit pythonException(const QString & str) : Exception(str) {}
 };
