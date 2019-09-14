@@ -64,6 +64,7 @@ void MatlabEngine::evalString(const QString & str)
 	}
 }
 
+
 void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 {
 	if (packetssl.isNull()) {
@@ -71,16 +72,40 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 	}
 // Заполнение массивов Balls Blues и Yellows и запуск main-функции
 
+	bool isCurrentTeamBlue = true;
+
+	QVector<bool> barrierState = mSharedRes->getBarrierState();
+	if (isCurrentTeamBlue) {
+		for (int i = 0; i < Constants::maxRobotsInTeam; i++) {
+			packetssl->robots_blue[i + Constants::maxRobotsInTeam * 4] = barrierState[i];
+		}
+	} else {
+		for (int i = 0; i < Constants::maxRobotsInTeam; i++) {
+			packetssl->robots_yellow[i + Constants::maxRobotsInTeam * 4] = barrierState[i];
+		}
+	}
+
 	memcpy(mxGetPr(mMatlabData.Ball), packetssl->balls, Constants::ballAlgoPacketSize * sizeof(double));
 	memcpy(mxGetPr(mMatlabData.Blue), packetssl->robots_blue, Constants::robotAlgoPacketSize * sizeof(double));
 	memcpy(mxGetPr(mMatlabData.Yellow), packetssl->robots_yellow, Constants::robotAlgoPacketSize * sizeof(double));
-	//memcpy(mxGetPr(mMatlabData.ballInside), &mIsBallInside, sizeof(double));
+	memcpy(mxGetPr(mMatlabData.fieldInfo), packetssl->fieldInfo, Constants::fieldInfoSize * sizeof(double));
 
+	double state = mSharedRes->getRefereeState();
+	memcpy(mxGetPr(mMatlabData.state), &state, sizeof(double));
+
+	double team = mSharedRes->getRefereeTeam();
+	memcpy(mxGetPr(mMatlabData.team), &team, sizeof(double));
+
+	double partOfField = (double)mSharedRes->getRefereePartOfFieldLeft();
+	memcpy(mxGetPr(mMatlabData.partOfFieldLeft), &partOfField, sizeof(double));
 
 	engPutVariable(mMatlabData.ep, "Balls", mMatlabData.Ball);
 	engPutVariable(mMatlabData.ep, "Blues", mMatlabData.Blue);
 	engPutVariable(mMatlabData.ep, "Yellows", mMatlabData.Yellow);
-	//engPutVariable(mMatlabData.ep, "ballInside", mMatlabData.ballInside);
+	engPutVariable(mMatlabData.ep, "FieldInfo", mMatlabData.fieldInfo);
+	engPutVariable(mMatlabData.ep, "RefState", mMatlabData.state);
+	engPutVariable(mMatlabData.ep, "RefCommandForTeam", mMatlabData.team);
+	engPutVariable(mMatlabData.ep, "RefPartOfFieldLeft", mMatlabData.partOfFieldLeft);
 	evalString(mMatlabData.config.file_of_matlab);
 
 // Забираем Rules и очищаем его в воркспейсе
@@ -103,11 +128,17 @@ void MatlabEngine::processPacket(const QSharedPointer<PacketSSL> & packetssl)
 
 	for (int i = 0; i < Constants::ruleAmount; i++) {
 		if (ruleArray[i] == 1) {
-			rule[i].mSpeedX = ruleArray[3 * Constants::ruleAmount + i];
-			rule[i].mSpeedY = ruleArray[2 * Constants::ruleAmount + i];
+			rule[i].mSpeedX = ruleArray[2 * Constants::ruleAmount + i];
+			rule[i].mSpeedY = ruleArray[3 * Constants::ruleAmount + i];
 			rule[i].mSpeedR = ruleArray[5 * Constants::ruleAmount + i];
 			rule[i].mKickUp = ruleArray[6 * Constants::ruleAmount + i];
 			rule[i].mKickForward = ruleArray[4 * Constants::ruleAmount + i];
+			rule[i].mAutoKick = ruleArray[7 * Constants::ruleAmount + i];
+			rule[i].mKickerVoltageLevel = ruleArray[8 * Constants::ruleAmount + i];
+			rule[i].mDribblerEnable = ruleArray[9 * Constants::ruleAmount + i];
+			rule[i].mSpeedDribbler = ruleArray[10 * Constants::ruleAmount + i];
+			rule[i].mKickerChargeEnable = ruleArray[11 * Constants::ruleAmount + i];
+			rule[i].mBeep = ruleArray[12 * Constants::ruleAmount + i];
 		}
 	}
 

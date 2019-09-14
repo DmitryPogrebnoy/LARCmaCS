@@ -42,7 +42,6 @@ signals:
 	void updateSSLFPS(const QString & status);
 
 private:
-	QTimer mDisplayTimer;
 	ReceiverWorker * mWorker;
 	QThread mThread;
 	SharedRes * mSharedRes;

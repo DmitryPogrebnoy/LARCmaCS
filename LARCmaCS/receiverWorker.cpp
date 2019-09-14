@@ -25,11 +25,18 @@ const QString ReceiverWorker::visionIP = QStringLiteral("224.5.23.2");
 ReceiverWorker::ReceiverWorker()
 	: mSocket(this)
 	, mStatisticsTimer(this)
+	, mCameraCheckTimer(this)
 	, mGroupAddress(visionIP)
 {
+	mCameraStatuses.resize(Constants::numOfCameras);
+	for (int i = 0; i < Constants::numOfCameras; i++) {
+		mCameraStatuses[i] = false;
+	}
 	mStatisticsTimer.setInterval(1000);
+	mCameraCheckTimer.setInterval(1000);
 
 	connect(&mStatisticsTimer, SIGNAL(timeout()), this, SLOT(formStatistics()));
+	connect(&mCameraCheckTimer, SIGNAL(timeout()), this, SLOT(updateCameraStatus()));
 	connect(&mSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 }
 
@@ -91,14 +98,27 @@ void ReceiverWorker::processPendingDatagrams()
 			continue;
 		}
 
-		if (packet->has_detection())
-			emit updateDetection(packet, packet->detection().camera_id());
+		if (packet->has_detection()) {
+			auto camId = packet->detection().camera_id();
+			emit updateDetection(packet, camId);
+			mCameraStatuses[camId] = true;
+		}
 
 		if (packet->has_geometry())
 			emit updateGeometry(packet);
 
 		mTotalPacketsNum++;
 		mPacketsPerSecond++;
+	}
+}
+
+void ReceiverWorker::updateCameraStatus()
+{
+	for (int i = 0; i < Constants::numOfCameras; i++) {
+		if (!mCameraStatuses[i]) {
+			emit updateDetection(QSharedPointer<SSL_WrapperPacket>(new SSL_WrapperPacket()), i);
+		}
+		mCameraStatuses[i] = false;
 	}
 }
 
